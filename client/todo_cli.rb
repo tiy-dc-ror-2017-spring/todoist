@@ -23,23 +23,24 @@ class TodoCli
   end
 
   def create_task
-    Task.create(name: @args.third, priority: args.fourth)
+    Development.new.create_new_task, { name: @args.second, priority: args.third }.to_json
   end
 
   def create_list
-    List.create(name: @args.second)
+    Development.new.create_new_list, { name: @args.second }.to_json
   end
 
   def add_task
     list_to_add_to = List.all.where(name: @args.second).first
-    list_to_add_to.add_task(Task.all.where(name: @args.third).first)
+    task_to_add = Task.all.where(name: @args.third).first
+    Development.new.add_task_to_list(list_to_add_to.id, task_to_add.id)
   end
 
   def complete
     task = Task.where(name: @args.second).first
-    task.complete
+    Development.new.complete_tasks(task.id), { completed_at: Time.now }
   end
-  
+
   def list_tasks
     Development.new.get_tasks
   end
