@@ -21,4 +21,8 @@ class Development
   def create_new_list
     HTTParty.post("HTTP://localhost:4567/lists/")
   end
+
+  def display_complete
+    HTTParty.get("HTTP://localhost:4567/tasks/complete")
+  end
 end
