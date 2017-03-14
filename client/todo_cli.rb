@@ -27,12 +27,12 @@ class TodoCli
   end
 
   def create_task
-    client.create_new_task({name: args[1], priority: args[2]})
+    client.create_new_task({ name: args[1], priority: args[2] })
     puts "You have created #{args[1]}"
   end
 
   def create_list
-    client.create_new_list({name: args[1]})
+    client.create_new_list({ name: args[1] })
     puts "You have created #{args[1]}"
   end
 
@@ -42,8 +42,9 @@ class TodoCli
     task_id = STDIN.gets.chomp
     puts "What list would you like to add this task too? Please type in ID number."
     display_lists
-    list_id = STDIN.gets.chomp
-    client.add_task_to_list(list_id, task_id)
+    list = STDIN.gets.chomp
+    list_to_add_to = {list_id: list}
+    client.add_task_to_list(list_to_add_to, task_id)
   end
 
   def complete
@@ -70,5 +71,4 @@ class TodoCli
     lists = client.display_lists
     lists.each { |el| puts el["name"], el["id"] }
   end
-
 end

@@ -2,7 +2,7 @@ require_relative "test_helper"
 require "json"
 
 class TodoCliTest < Minitest::Test
-attr_reader :client
+  attr_reader :client
 
   def setup
     @client = Development.new("http://localhost:4567/")

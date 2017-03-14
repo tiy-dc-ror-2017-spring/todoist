@@ -16,8 +16,8 @@ class Development
     HTTParty.patch("#{base_url}tasks/#{task_id}", completed_at: Time.now.to_json)
   end
 
-  def add_task_to_list(list_id, task_id)
-    HTTParty.get("#{base_url}lists/#{list_id}/tasks/#{task_id}")
+  def add_task_to_list(list_to_add_to, task_id)
+    HTTParty.patch("#{base_url}tasks/#{task_id}", body: list_to_add_to.to_json)
   end
 
   def create_new_task(task_data)
