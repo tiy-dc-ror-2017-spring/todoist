@@ -40,8 +40,8 @@ attr_reader :client
     assert_equal 1, client.get_tasks["id"]
   end
 
-  def test_diplay_complete
-    stub_request(:get, "http://localhost:4567/tasks/complete").to_return(body: File.read("./stubbed_requests/completed.json"), headers: { "Content-Type" => "application/json" })
-     client.get_tasks
-  end
+  # def test_diplay_complete
+  #   stub_request(:get, "http://localhost:4567/tasks/complete").to_return(body: File.read("./stubbed_requests/completed.json"), headers: { "Content-Type" => "application/json" })
+  #    client.get_tasks
+  # end
 end
