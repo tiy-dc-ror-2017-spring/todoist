@@ -30,10 +30,10 @@ attr_reader :client
     client.add_task_to_list("1", "1")
   end
 
-  # def test_complete
-  #   stub_request(:patch, "http://localhost:4567/tasks/1").to_return(body: File.read("./stubbed_requests/complete_task.json"), headers: { "Content-Type" => "application/json" })
-  #   assert_equal 1, client.complete_tasks("1")["id"]
-  # end
+  def test_complete
+    stub_request(:patch, "http://localhost:4567/tasks/1").to_return(body: File.read("./stubbed_requests/complete_task.json"), headers: { "Content-Type" => "application/json" })
+    assert_equal 1, client.complete_tasks("1")["id"]
+  end
 
   def test_display_all
     stub_request(:get, "http://localhost:4567/tasks").to_return(body: File.read("./stubbed_requests/get_tasks.json"), headers: { "Content-Type" => "application/json" })
