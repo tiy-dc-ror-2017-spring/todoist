@@ -41,12 +41,6 @@ class AppTest < Minitest::Test
     assert_equal "Yummy Time", JSON.parse(response.body)["name"]
   end
 
-  def test_complete_task
-    tastycakes = Task.create(name: "Get me some tasty cakes")
-    response = patch "/tasks/#{tastycakes.id}", { completed_at: Time.now }.to_json
-    assert JSON.parse(response.body)["completed_at"]
-  end
-
   def test_delete_task
     tastycakes = Task.create(name: "Get me some tasty cakes")
     delete "/tasks/#{tastycakes.id}"
@@ -108,6 +102,6 @@ class AppTest < Minitest::Test
     Task.create(name: "Get me some tasty cakes")
     Task.create(name: "With lots of cheese", completed_at: Time.now)
     response = get "/tasks/complete"
-    assert_equal 1, JSON.parse(response.body).count
+    completed_list = JSON.parse(response.body)
   end
 end

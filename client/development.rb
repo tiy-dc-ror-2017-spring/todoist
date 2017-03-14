@@ -2,27 +2,37 @@ require "httparty"
 require "pry"
 
 class Development
+  attr_reader :base_url
+
+  def initialize(base_url)
+    @base_url = base_url
+  end
+
   def get_tasks
-    HTTParty.get("HTTP://localhost:4567/tasks")
+    HTTParty.get("#{base_url}tasks")
   end
 
   def complete_tasks(task_id)
-    HTTParty.patch("HTTP://localhost:4567/tasks/#{task_id}")
+    HTTParty.patch("#{base_url}tasks/#{task_id}", completed_at: Time.now.to_json)
   end
 
   def add_task_to_list(list_id, task_id)
-    HTTParty.get("HTTP://localhost:4567/lists/#{list_id}/tasks/#{task_id}")
+    HTTParty.get("#{base_url}lists/#{list_id}/tasks/#{task_id}")
   end
 
-  def create_new_task
-    HTTParty.post("HTTP://localhost:4567/tasks/")
+  def create_new_task(task_data)
+    HTTParty.post("#{base_url}tasks", body: task_data.to_json)
   end
 
-  def create_new_list
-    HTTParty.post("HTTP://localhost:4567/lists/")
+  def create_new_list(list_data)
+    HTTParty.post("#{base_url}lists", body: list_data.to_json)
+  end
+
+  def display_lists
+    HTTParty.get("#{base_url}lists")
   end
 
   def display_complete
-    HTTParty.get("HTTP://localhost:4567/tasks/complete")
+    HTTParty.get("#{base_url}tasks/complete")
   end
 end

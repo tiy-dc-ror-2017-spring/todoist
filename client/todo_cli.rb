@@ -1,57 +1,74 @@
 require "httparty"
-
+require_relative "development"
 class TodoCli
-  attr_reader :args
+  attr_reader :args, :client
   def initialize(args)
     @args = args
+    @client = Development.new("http://localhost:4567/")
 
-    # Extract the "subcommand"
     case @args.first
-      when "create_task"
-        create_task
-      when "create_list"
-        create_list
-      when "add_task"
-        add_task
-      when "complete"
-        complete
-      when "display_all"
-        list_tasks
-      when "display_complete"
-        display_complete
-      else
-        usage
+    when "create_task"
+      create_task
+    when "create_list"
+      create_list
+    when "add_task"
+      add_task
+    when "complete"
+      complete
+    when "display_all"
+      list_tasks
+    when "display_complete"
+      display_complete
+    when "display_lists"
+      display_lists
+    else
+      usage
     end
   end
 
   def create_task
-    Development.new.create_new_task = { name: @args.second, priority: args.third }.to_json
+    client.create_new_task({name: args[1], priority: args[2]})
+    puts "You have created #{args[1]}"
   end
 
   def create_list
-    Development.new.create_new_list = { name: @args.second }.to_json
+    client.create_new_list({name: args[1]})
+    puts "You have created #{args[1]}"
   end
 
   def add_task
-    list_to_add_to = List.all.where(name: @args.second).first
-    task_to_add = Task.all.where(name: @args.third).first
-    Development.new.add_task_to_list(list_to_add_to.id, task_to_add.id)
+    puts "What task would you like to add? Please type in ID number."
+    list_tasks
+    task_id = STDIN.gets.chomp
+    puts "What list would you like to add this task too? Please type in ID number."
+    display_lists
+    list_id = STDIN.gets.chomp
+    client.add_task_to_list(list_id, task_id)
   end
 
-  # def complete
-  #   task = Task.where(name: @args.second).first
-  #   Development.new.complete_tasks(task.id), { completed_at: Time.now }
-  # end
+  def complete
+    puts "Which task would you like to complete? Please type in ID number"
+    list_tasks
+    task_id = STDIN.gets.chomp
+    client.complete_tasks(task_id)
+  end
 
   def display_complete
-    Development.new.display_complete
+    client.display_complete
   end
 
   def list_tasks
-    Development.new.get_tasks
+    tasks = client.get_tasks
+    tasks.each { |el| puts el["name"], el["id"] }
   end
 
   def usage
     "Please choose between from create_task, create_list, add_task, complete, or display_all."
   end
+
+  def display_lists
+    lists = client.display_lists
+    lists.each { |el| puts el["name"], el["id"] }
+  end
+
 end

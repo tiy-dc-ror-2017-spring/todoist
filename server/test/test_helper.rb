@@ -13,6 +13,7 @@ require "rack/test"
 
 require_relative "../app/app"
 require_relative "../db/migrations/1_create_tasks_table"
+require_relative "../db/migrations/2_create_lists_table"
 
 # rubocop:disable Lint/HandleExceptions
 begin
