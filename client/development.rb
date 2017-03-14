@@ -12,8 +12,8 @@ class Development
     HTTParty.get("#{base_url}tasks")
   end
 
-  def complete_tasks(task_id)
-    HTTParty.patch("#{base_url}tasks/#{task_id}", completed_at: Time.now.to_json)
+  def complete_tasks(task_id, complete)
+    HTTParty.patch("#{base_url}tasks/#{task_id}", body: complete.to_json)
   end
 
   def add_task_to_list(list_to_add_to, task_id)
@@ -32,7 +32,7 @@ class Development
     HTTParty.get("#{base_url}lists")
   end
 
-  def display_complete
-    HTTParty.get("#{base_url}tasks/complete")
-  end
+  # def display_complete
+  #   HTTParty.get("#{base_url}tasks/complete")
+  # end
 end

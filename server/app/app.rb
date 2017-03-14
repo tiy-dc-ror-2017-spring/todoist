@@ -45,10 +45,6 @@ class App < Sinatra::Base
     task = Task.find(params["id"])
     task.update(payload)
     body task.to_json
-    # task_to_update = Task.find(params["task_id"].to_i)
-    # task_to_update.list_id = params["list_id"].to_i
-    # task_to_update.save
-    # body task_to_update.to_json
   end
 
   delete "/tasks/:id" do

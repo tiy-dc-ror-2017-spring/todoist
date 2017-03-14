@@ -43,7 +43,7 @@ class TodoCli
     puts "What list would you like to add this task too? Please type in ID number."
     display_lists
     list = STDIN.gets.chomp
-    list_to_add_to = {list_id: list}
+    list_to_add_to = { list_id: list }
     client.add_task_to_list(list_to_add_to, task_id)
   end
 
@@ -51,7 +51,8 @@ class TodoCli
     puts "Which task would you like to complete? Please type in ID number"
     list_tasks
     task_id = STDIN.gets.chomp
-    client.complete_tasks(task_id)
+    complete = { completed_at: Time.now }
+    client.complete_tasks(task_id, complete)
   end
 
   def display_complete
