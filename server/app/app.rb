@@ -28,8 +28,8 @@ class App < Sinatra::Base
 
   get "/tasks/complete" do
     completed_tasks = Task.all
-    to_be_response = completed_tasks.select do |el|
-      if el.completed_at
+    to_be_response = completed_tasks.select do |task|
+      if task.completed_at
         true
       end
     end
@@ -58,18 +58,12 @@ class App < Sinatra::Base
   end
 
   post "/lists" do
-    payload = JSON.parse request.body.read
+    payload = JSON.parse(request.body.read)
     body List.create(payload).to_json
   end
 
   get "/lists/:id" do
     body List.find(params["id"]).to_json
-  end
-
-  get "/lists/:list_id/tasks/:task_id" do
-    task_to_update = Task.find(params["task_id"])
-    task_to_update.list_id = params["list_id"].to_i
-    body task_to_update.to_json
   end
 
   get "/lists/:list_id/tasks" do

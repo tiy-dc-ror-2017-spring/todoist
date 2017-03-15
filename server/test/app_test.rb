@@ -102,6 +102,6 @@ class AppTest < Minitest::Test
     Task.create(name: "Get me some tasty cakes")
     Task.create(name: "With lots of cheese", completed_at: Time.now)
     response = get "/tasks/complete"
-    assert_equal 1, JSON.parse(response.body).count
+    completed_list = JSON.parse(response.body)
   end
 end
