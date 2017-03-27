@@ -9,6 +9,6 @@ class Task < ActiveRecord::Base
   end
 
   def self.display_all
-    output = self.all.map { |el| puts el.name }
+    self.all.map { |el| puts el.name }
   end
 end
